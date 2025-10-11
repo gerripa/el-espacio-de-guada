@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Partidos de Fútbol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 50%, #1a1a1a 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="text-white p-6">
+    <div id="app" class="max-w-6xl mx-auto"></div>
+
+    <script>
+        // Estado de la aplicación
+        let state = {
+            usuarioActual: 'juan',
+            datosJuan: [],
+            datosMartin: [],
+            vistaComparacion: false,
+            mostrarForm: false,
+            nuevoPartido: {
+                fecha: '',
+                equipoLocal: '',
+                equipoVisitante: '',
+                estadio: '',
+                resultado: ''
+            }
+        };
+
+        // Cargar datos del localStorage
+        function cargarDatos() {
+            const datosJuan = localStorage.getItem('partidos_juan');
+            const datosMartin = localStorage.getItem('partidos_martin');
+            
+            if (datosJuan) state.datosJuan = JSON.parse(datosJuan);
+            if (datosMartin) state.datosMartin = JSON.parse(datosMartin);
+        }
+
+        // Guardar datos en localStorage
+        function guardarDatos() {
+            localStorage.setItem('partidos_juan', JSON.stringify(state.datosJuan));
+            localStorage.setItem('partidos_martin', JSON.stringify(state.datosMartin));
+        }
+
+        // Obtener partidos del usuario actual
+        function getPartidosActuales() {
+            return state.usuarioActual === 'juan' ? state.datosJuan : state.datosMartin;
+        }
+
+        // Agregar partido
+        function agregarPartido() {
+            const { fecha, equipoLocal, equipoVisitante, estadio } = state.nuevoPartido;
+            
+            if (fecha && equipoLocal && equipoVisitante && estadio) {
+                const partido = { ...state.nuevoPartido, id: Date.now() };
+                
+                if (state.usuarioActual === 'juan') {
+                    state.datosJuan.push(partido);
+                } else {
+                    state.datosMartin.push(partido);
+                }
+                
+                state.nuevoPartido = { fecha: '', equipoLocal: '', equipoVisitante: '', estadio: '', resultado: '' };
+                state.mostrarForm = false;
+                guardarDatos();
+                render();
+            }
+        }
+
+        // Eliminar partido
+        function eliminarPartido(id) {
+            if (state.usuarioActual === 'juan') {
+                state.datosJuan = state.datosJuan.filter(p => p.id !== id);
+            } else {
+                state.datosMartin = state.datosMartin.filter(p => p.id !== id);
+            }
+            guardarDatos();
+            render();
+        }
+
+        // Buscar resultado en Google
+        function buscarResultado() {
+            const { fecha, equipoLocal, equipoVisitante } = state.nuevoPartido;
+            
+            if (fecha && equipoLocal && equipoVisitante) {
+                const fechaObj = new Date(fecha + 'T00:00:00');
+                const query = `${equipoLocal} vs ${equipoVisitante} ${fechaObj.getDate()}/${fechaObj.getMonth() + 1}/${fechaObj.getFullYear()} resultado`;
+                const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                window.open(searchUrl, '_blank');
+            }
+        }
+
+        // Formatear fecha
+        function formatearFecha(fechaStr) {
+            const fecha = new Date(fechaStr + 'T00:00:00');
+            return fecha.toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        // Obtener resumen de estadios
+        function getResumenEstadios(partidos) {
+            return partidos.reduce((acc, partido) => {
+                acc[partido.estadio] = (acc[partido.estadio] || 0) + 1;
+                return acc;
+            }, {});
+        }
+
+        // Renderizar vista de comparación
+        function renderVistaComparacion() {
+            const estadiosJuan = getResumenEstadios(state.datosJuan);
+            const estadiosMartin = getResumenEstadios(state.datosMartin);
+            const todosEstadios = [...new Set([...Object.keys(estadiosJuan), ...Object.keys(estadiosMartin)])];
+
+            return `
+                <div class="text-center mb-12">
+                    <h1 class="text-5xl font-bold mb-3 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+                        Comparación
+                    </h1>
+                    <p class="text-gray-400">Juan vs Martín</p>
+                </div>
+
+                <button onclick="state.vistaComparacion = false; render();" 
+                    class="mb-8 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                    ← Volver
+                </button>
+
+                <!-- Stats Comparison -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-xl">
+                        <div class="text-gray-400 mb-3 text-center">Partidos Totales</div>
+                        <div class="flex justify-around items-center">
+                            <div class="text-center">
+                                <div class="text-sm text-gray-500 mb-1">Juan</div>
+                                <div class="text-3xl font-bold text-red-600">${state.datosJuan.length}</div>
+                            </div>
+                            <div class="text-2xl text-gray-600">vs</div>
+                            <div class="text-center">
+                                <div class="text-sm text-gray-500 mb-1">Martín</div>
+                                <div class="text-3xl font-bold text-white">${state.datosMartin.length}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-xl">
+                        <div class="text-gray-400 mb-3 text-center">Estadios Visitados</div>
+                        <div class="flex justify-around items-center">
+                            <div class="text-center">
+                                <div class="text-sm text-gray-500 mb-1">Juan</div>
+                                <div class="text-3xl font-bold text-red-600">${Object.keys(estadiosJuan).length}</div>
+                            </div>
+                            <div class="text-2xl text-gray-600">vs</div>
+                            <div class="text-center">
+                                <div class="text-sm text-gray-500 mb-1">Martín</div>
+                                <div class="text-3xl font-bold text-white">${Object.keys(estadiosMartin).length}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-xl">
+                        <div class="text-gray-400 mb-3 text-center">🏆 Líder</div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-red-600">
+                                ${state.datosJuan.length > state.datosMartin.length ? 'Juan' : 
+                                  state.datosMartin.length > state.datosJuan.length ? 'Martín' : 'Empate'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparación por estadio -->
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700 shadow-xl">
+                    <h2 class="text-2xl font-bold mb-6 text-red-600">Comparación por Estadio</h2>
+                    <div class="space-y-6">
+                        ${todosEstadios.length === 0 ? `
+                            <div class="text-center py-8 text-gray-500">
+                                <p>📍 Todavía no hay estadios registrados</p>
+                            </div>
+                        ` : todosEstadios.map(estadio => {
+                            const cantJuan = estadiosJuan[estadio] || 0;
+                            const cantMartin = estadiosMartin[estadio] || 0;
+                            const max = Math.max(cantJuan, cantMartin);
+                            
+                            return `
+                                <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                                    <div class="text-lg font-semibold text-white mb-3">${estadio}</div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <div class="text-sm text-gray-400 mb-2">Juan: ${cantJuan} veces</div>
+                                            <div class="w-full bg-gray-800 rounded-full h-3">
+                                                <div class="bg-gradient-to-r from-red-600 to-red-800 h-3 rounded-full transition-all duration-500"
+                                                    style="width: ${max > 0 ? (cantJuan / max * 100) : 0}%"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm text-gray-400 mb-2">Martín: ${cantMartin} veces</div>
+                                            <div class="w-full bg-gray-800 rounded-full h-3">
+                                                <div class="bg-gradient-to-r from-white to-gray-300 h-3 rounded-full transition-all duration-500"
+                                                    style="width: ${max > 0 ? (cantMartin / max * 100) : 0}%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Renderizar vista principal
+        function renderVistaPrincipal() {
+            const partidos = getPartidosActuales();
+            const partidosOrdenados = [...partidos].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+            const resumenEstadios = getResumenEstadios(partidos);
+            const estadiosOrdenados = Object.entries(resumenEstadios).sort((a, b) => b[1] - a[1]);
+            const isJuan = state.usuarioActual === 'juan';
+
+            return `
+                <div class="text-center mb-8">
+                    <h1 class="text-5xl font-bold mb-3 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+                        Mis Partidos de Fútbol
+                    </h1>
+                    <p class="text-gray-400">Todos los partidos que viví en vivo</p>
+                </div>
+
+                <!-- User Tabs -->
+                <div class="flex gap-4 mb-8 justify-center">
+                    <button onclick="state.usuarioActual = 'juan'; state.mostrarForm = false; render();"
+                        class="px-8 py-3 rounded-lg font-bold transition-all duration-300 ${isJuan ? 
+                            'bg-gradient-to-r from-red-600 to-red-800 text-white shadow-lg' : 
+                            'bg-gray-800 text-gray-400 hover:bg-gray-700'}">
+                        Juan
+                    </button>
+                    <button onclick="state.usuarioActual = 'martin'; state.mostrarForm = false; render();"
+                        class="px-8 py-3 rounded-lg font-bold transition-all duration-300 ${!isJuan ? 
+                            'bg-gradient-to-r from-white to-gray-300 text-black shadow-lg' : 
+                            'bg-gray-800 text-gray-400 hover:bg-gray-700'}">
+                        Martín
+                    </button>
+                    <button onclick="state.vistaComparacion = true; render();"
+                        class="px-8 py-3 rounded-lg font-bold bg-gray-800 text-gray-400 hover:bg-gray-700 transition-all duration-300">
+                        📊 Comparar
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-xl">
+                        <div class="text-4xl font-bold mb-2 ${isJuan ? 'text-red-600' : 'text-white'}">
+                            ${partidos.length}
+                        </div>
+                        <div class="text-gray-400">Partidos Totales</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-xl">
+                        <div class="text-4xl font-bold mb-2 ${isJuan ? 'text-red-600' : 'text-white'}">
+                            ${Object.keys(resumenEstadios).length}
+                        </div>
+                        <div class="text-gray-400">Estadios Visitados</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-xl">
+                        <div class="text-4xl font-bold mb-2 ${isJuan ? 'text-red-600' : 'text-white'}">
+                            ${estadiosOrdenados[0]?.[0]?.substring(0, 15) || '-'}
+                        </div>
+                        <div class="text-gray-400">Estadio Favorito</div>
+                    </div>
+                </div>
+
+                <!-- Add Button -->
+                <button onclick="state.mostrarForm = !state.mostrarForm; render();"
+                    class="w-full mb-8 font-bold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-2xl transform hover:scale-105 ${
+                        isJuan ? 'bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white' :
+                        'bg-gradient-to-r from-white to-gray-300 hover:from-gray-200 hover:to-gray-400 text-black'}">
+                    ➕ Agregar Partido
+                </button>
+
+                <!-- Form -->
+                ${state.mostrarForm ? `
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 mb-8 border border-gray-700 shadow-2xl">
+                        <h2 class="text-2xl font-bold mb-6 ${isJuan ? 'text-red-600' : 'text-white'}">Nuevo Partido</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">Fecha</label>
+                                <input type="date" id="fecha" value="${state.nuevoPartido.fecha}"
+                                    onchange="state.nuevoPartido.fecha = this.value"
+                                    class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none ${
+                                        isJuan ? 'focus:border-red-600' : 'focus:border-white'}">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">Estadio</label>
+                                <input type="text" id="estadio" value="${state.nuevoPartido.estadio}"
+                                    onchange="state.nuevoPartido.estadio = this.value"
+                                    placeholder="Ej: Estadio Monumental"
+                                    class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none ${
+                                        isJuan ? 'focus:border-red-600' : 'focus:border-white'}">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">Equipo Local</label>
+                                <input type="text" id="equipoLocal" value="${state.nuevoPartido.equipoLocal}"
+                                    onchange="state.nuevoPartido.equipoLocal = this.value"
+                                    placeholder="Ej: River Plate"
+                                    class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none ${
+                                        isJuan ? 'focus:border-red-600' : 'focus:border-white'}">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm">Equipo Visitante</label>
+                                <input type="text" id="equipoVisitante" value="${state.nuevoPartido.equipoVisitante}"
+                                    onchange="state.nuevoPartido.equipoVisitante = this.value"
+                                    placeholder="Ej: Boca Juniors"
+                                    class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none ${
+                                        isJuan ? 'focus:border-red-600' : 'focus:border-white'}">
+                            </div>
+                            <div class="md:col-span-2">
+                                <div class="flex gap-3 items-end">
+                                    <div class="flex-1">
+                                        <label class="block text-gray-400 mb-2 text-sm">Resultado</label>
+                                        <input type="text" id="resultado" value="${state.nuevoPartido.resultado}"
+                                            onchange="state.nuevoPartido.resultado = this.value"
+                                            placeholder="Ej: 2-1"
+                                            class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none ${
+                                                isJuan ? 'focus:border-red-600' : 'focus:border-white'}">
+                                    </div>
+                                    <button onclick="buscarResultado()"
+                                        class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                                        🔍 Buscar en Google
+                                    </button>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">Buscá el resultado en Google y luego ingresalo manualmente</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 mt-6">
+                            <button onclick="agregarPartido()"
+                                class="flex-1 font-bold py-3 px-6 rounded-lg transition-all duration-300 ${
+                                    isJuan ? 'bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white' :
+                                    'bg-gradient-to-r from-white to-gray-300 hover:from-gray-200 hover:to-gray-400 text-black'}">
+                                Guardar
+                            </button>
+                            <button onclick="state.mostrarForm = false; render();"
+                                class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300">
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                ` : ''}
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Matches List -->
+                    <div class="lg:col-span-2">
+                        <h2 class="text-2xl font-bold mb-6 ${isJuan ? 'text-red-600' : 'text-white'}">Historial de Partidos</h2>
+                        <div class="space-y-4">
+                            ${partidosOrdenados.length === 0 ? `
+                                <div class="text-center py-16 text-gray-500">
+                                    <div class="text-6xl mb-4 opacity-30">📅</div>
+                                    <p>Todavía no agregaste ningún partido</p>
+                                </div>
+                            ` : partidosOrdenados.map(partido => `
+                                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 border border-gray-700 hover:border-${isJuan ? 'red' : 'white'}-600 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div class="flex items-center gap-2 text-gray-400 text-sm">
+                                            📅 ${formatearFecha(partido.fecha)}
+                                        </div>
+                                        <button onclick="eliminarPartido(${partido.id})"
+                                            class="text-red-500 hover:text-red-400 transition-colors">
+                                            🗑️
+                                        </button>
+                                    </div>
+                                    <div class="text-center mb-3">
+                                        <div class="text-2xl font-bold text-white mb-2">
+                                            ${partido.equipoLocal} vs ${partido.equipoVisitante}
+                                        </div>
+                                        ${partido.resultado ? `
+                                            <div class="text-3xl font-bold ${isJuan ? 'text-red-600' : 'text-white'}">
+                                                ${partido.resultado}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="flex items-center justify-center gap-2 text-gray-400">
+                                        📍 ${partido.estadio}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Stadium Summary -->
+                    <div class="lg:col-span-1">
+                        <h2 class="text-2xl font-bold mb-6 ${isJuan ? 'text-red-600' : 'text-white'}">Estadios</h2>
+                        <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-xl">
+                            ${estadiosOrdenados.length === 0 ? `
+                                <div class="text-center py-8 text-gray-500">
+                                    <div class="text-5xl mb-3 opacity-30">📍</div>
+                                    <p class="text-sm">Sin estadios aún</p>
+                                </div>
+                            ` : `
+                                <div class="space-y-4">
+                                    ${estadiosOrdenados.map(([estadio, cantidad]) => {
+                                        const maxCantidad = Math.max(...estadiosOrdenados.map(e => e[1]));
+                                        return `
+                                            <div class="bg-gray-900 rounded-lg p-4 border border-gray-700 hover:border-${isJuan ? 'red' : 'white'}-600 transition-all duration-300">
+                                                <div class="flex justify-between items-center mb-2">
+                                                    <span class="font-semibold text-white">${estadio}</span>
+                                                    <span class="text-2xl font-bold ${isJuan ? 'text-red-600' : 'text-white'}">${cantidad}</span>
+                                                </div>
+                                                <div class="w-full bg-gray-800 rounded-full h-2">
+                                                    <div class="${isJuan ? 'bg-gradient-to-r from-red-600 to-red-800' : 'bg-gradient-to-r from-white to-gray-300'} h-2 rounded-full transition-all duration-500"
+                                                        style="width: ${(cantidad / maxCantidad) * 100}%"></div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Renderizar la aplicación
+        function render() {
+            const app = document.getElementById('app');
+            app.innerHTML = state.vistaComparacion ? renderVistaComparacion() : renderVistaPrincipal();
+        }
+
+        // Inicializar
+        cargarDatos();
+        render();
+    </script>
+</body>
+</html>
