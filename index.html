@@ -3,1144 +3,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Espacio Personal</title>
+    <title>⭐ Competencia</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        :root {
-            --cream: #f5f1eb;
-            --cream-dark: #e8dfd3;
-            --gold: #8b6f47;
-            --gold-dark: #6d5938;
-            --brown: #5c4a3a;
-            --text-dark: #3a3a3a;
-            --text-light: #6a6a6a;
-            --shadow: rgba(92, 74, 58, 0.15);
-        }
-        
-        body.dark-mode {
-            --cream: #2a2520;
-            --cream-dark: #3a342e;
-            --gold: #a08870;
-            --gold-dark: #8b6f47;
-            --brown: #6d5938;
-            --text-dark: #e8dfd3;
-            --text-light: #c9bcb0;
-            --shadow: rgba(0, 0, 0, 0.4);
-        }
-        
+
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--cream);
-            color: var(--text-dark);
-            line-height: 1.7;
-            transition: all 0.4s ease;
-            letter-spacing: 0.3px;
-        }
-        
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 80px 30px 60px;
-            background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%);
-            margin-bottom: 50px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
             position: relative;
-            border-radius: 0 0 50px 50px;
         }
-        
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 1px;
-            background: var(--gold);
-        }
-        
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.8em;
-            font-weight: 300;
-            color: var(--gold);
-            margin-bottom: 20px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-        
-        .quote {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            color: var(--text-light);
-            font-size: 1.05em;
-            margin-top: 20px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-        
-        .mode-toggle {
+
+        .stars-bg {
             position: fixed;
-            top: 30px;
-            right: 30px;
-            background: var(--cream-dark);
-            border: 1px solid var(--gold);
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .star-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
             border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3em;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 2px 15px var(--shadow);
+            opacity: 0.8;
+            animation: twinkle 3s infinite;
         }
-        
-        .mode-toggle:hover {
-            background: var(--gold);
-            transform: translateY(-2px);
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
-        
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-            border-bottom: 1px solid var(--gold);
-            padding-bottom: 2px;
-        }
-        
-        .nav-btn {
-            font-family: 'Montserrat', sans-serif;
-            background: transparent;
-            border: none;
-            padding: 15px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.85em;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 300;
+
+        .container {
             position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
         }
-        
-        .nav-btn::after {
+
+        h1 {
+            text-align: center;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #a0aec0;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:before {
             content: '';
             position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-btn:hover::after, .nav-btn.active::after {
-            width: 80%;
-        }
-        
-        .nav-btn.active {
-            color: var(--gold);
-        }
-        
-        .section {
-            display: none;
-            animation: fadeIn 0.6s ease;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .card {
-            background: var(--cream-dark);
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 30px var(--shadow);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(139, 111, 71, 0.2);
-            border-radius: 25px;
-        }
-        
-        .card:hover {
-            box-shadow: 0 8px 40px var(--shadow);
-        }
-        
-        h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2em;
-            color: var(--gold);
-            margin-bottom: 25px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            text-align: center;
-            text-transform: uppercase;
-        }
-        
-        h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4em;
-            color: var(--brown);
-            margin: 25px 0 15px 0;
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-        
-        input, textarea, select {
+            top: 0;
+            left: -100%;
             width: 100%;
-            padding: 14px 20px;
-            margin: 12px 0;
-            border: 1px solid var(--gold);
-            background: var(--cream);
-            color: var(--text-dark);
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            border-radius: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
         }
-        
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--gold-dark);
-            box-shadow: 0 0 0 2px rgba(139, 111, 71, 0.1);
+
+        .card:hover:before {
+            left: 100%;
         }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-            line-height: 1.6;
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
-        
-        button {
-            background: var(--gold);
-            color: white;
-            border: none;
-            padding: 14px 35px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85em;
-            transition: all 0.3s ease;
-            margin: 8px 5px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 400;
-            border-radius: 25px;
-        }
-        
-        button:hover {
-            background: var(--gold-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px var(--shadow);
-        }
-        
-        .day-section {
-            background: var(--cream);
-            padding: 25px;
-            margin: 25px 0;
-            border-left: 2px solid var(--gold);
-            border-radius: 20px;
-        }
-        
-        .day-header {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3em;
-            color: var(--gold);
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        .card-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 25px;
+            text-transform: lowercase;
             letter-spacing: 1px;
         }
-        
-        .note-item {
-            background: var(--cream-dark);
-            padding: 18px;
-            margin: 12px 0;
-            border-left: 1px solid var(--gold);
-            border-radius: 15px;
-        }
-        
-        .note-time {
-            color: var(--text-light);
-            font-size: 0.8em;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .delete-btn {
-            background: var(--brown);
-        }
-        
-        .delete-btn:hover {
-            background: #6a5a45;
-        }
-        
-        .song-item, .reminder-item, .task-item {
+
+        .stars-display {
+            font-size: 2rem;
+            margin: 25px 0;
+            min-height: 60px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 18px;
-            background: var(--cream);
-            margin: 12px 0;
-            transition: all 0.3s ease;
-            border-left: 1px solid var(--gold);
-            border-radius: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            color: #ffd700;
         }
-        
-        .song-item:hover, .reminder-item:hover, .task-item:hover {
-            background: var(--cream-dark);
-            border-left-width: 3px;
+
+        .star {
+            display: inline-block;
+            animation: starPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
         }
-        
-        .reminder-item.completed, .task-item.completed {
-            opacity: 0.5;
+
+        @keyframes starPop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
-        
-        .reminder-item.completed .reminder-text,
-        .task-item.completed .task-text {
-            text-decoration: line-through;
+
+        .counter {
+            font-size: 2.5rem;
+            font-weight: 200;
+            color: #a0aec0;
+            margin: 20px 0;
+            letter-spacing: 2px;
         }
-        
-        .checkbox {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
-            cursor: pointer;
-            accent-color: var(--gold);
-        }
-        
-        .item-content {
-            flex: 1;
-            font-size: 0.95em;
-        }
-        
-        .item-actions {
+
+        .btn-group {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
         }
-        
-        .file-upload-area {
-            border: 1px dashed var(--gold);
-            padding: 40px;
-            text-align: center;
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 28px;
+            font-size: 1rem;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 20px 0;
-            background: var(--cream);
-            color: var(--text-light);
-            font-size: 0.9em;
-            letter-spacing: 0.5px;
-            border-radius: 20px;
-        }
-        
-        .file-upload-area:hover {
-            border-color: var(--gold-dark);
-            background: var(--cream-dark);
-        }
-        
-        .file-item {
-            background: var(--cream);
-            padding: 12px 18px;
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9em;
-            border-radius: 15px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-        
-        .stat-card {
-            background: var(--cream);
-            padding: 30px;
-            text-align: center;
-            border: 1px solid var(--gold);
-            border-radius: 20px;
-        }
-        
-        .stat-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3em;
-            color: var(--gold);
-            font-weight: 300;
-        }
-        
-        .stat-label {
-            color: var(--text-light);
-            margin-top: 8px;
-            font-size: 0.85em;
-            text-transform: uppercase;
+            font-weight: 500;
             letter-spacing: 1px;
         }
-        
-        .mood-selector {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
         }
-        
-        .mood-btn {
-            font-size: 2em;
-            background: var(--cream);
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            padding: 18px 22px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+
+        .btn:active {
+            transform: translateY(0);
         }
-        
-        .mood-btn:hover, .mood-btn.selected {
-            transform: scale(1.15);
-            border-color: var(--gold-dark);
-            box-shadow: 0 5px 20px var(--shadow);
+
+        .btn-minus {
+            background: rgba(255, 255, 255, 0.05);
         }
-        
-        .goals-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+
+        .btn-history {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+            font-size: 0.85rem;
+            padding: 8px 20px;
+            margin-top: 10px;
         }
-        
-        .goal-card {
-            background: var(--cream);
-            padding: 25px;
-            border-left: 2px solid var(--gold);
-            border-radius: 20px;
-        }
-        
-        .progress-bar {
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 8px;
-            background: var(--cream-dark);
-            overflow: hidden;
-            margin: 15px 0;
-            border-radius: 10px;
-        }
-        
-        .progress-fill {
             height: 100%;
-            background: var(--gold);
-            transition: width 0.3s ease;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
-        
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #a0aec0;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .modal-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .history-list {
+            margin-top: 20px;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #ffd700;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .history-date {
+            color: #ffd700;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .history-reason {
+            color: #a0aec0;
+            font-size: 1rem;
+        }
+
+        .reset-all {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 35px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .glow-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffd700;
+            animation: glowParticle 1s ease-out forwards;
+        }
+
+        @keyframes glowParticle {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 768px) {
             h1 {
-                font-size: 2em;
-                letter-spacing: 2px;
+                font-size: 2.5rem;
+                letter-spacing: 4px;
             }
-            
-            header {
-                padding: 60px 20px 40px;
-            }
-            
-            .stats-grid, .goals-container {
+            .grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .song-item, .reminder-item, .task-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .item-actions {
-                width: 100%;
-                margin-top: 12px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="mode-toggle" onclick="toggleDarkMode()">🌙</div>
-    
-    <header>
-        <h1>Personal Space</h1>
-        <div class="quote" id="dailyQuote"></div>
-    </header>
+    <div class="stars-bg" id="starsBg"></div>
     
     <div class="container">
-        <nav>
-            <button class="nav-btn active" onclick="showSection('home')">Home</button>
-            <button class="nav-btn" onclick="showSection('journal')">Journal</button>
-            <button class="nav-btn" onclick="showSection('songs')">Music</button>
-            <button class="nav-btn" onclick="showSection('reminders')">Reminders</button>
-            <button class="nav-btn" onclick="showSection('faculty')">University</button>
-            <button class="nav-btn" onclick="showSection('goals')">Goals</button>
-            <button class="nav-btn" onclick="showSection('photos')">Memories</button>
-        </nav>
+        <h1>STARS</h1>
+        <p class="subtitle">Summer Competition 2025</p>
         
-        <!-- HOME SECTION -->
-        <div id="home" class="section active">
-            <div class="card">
-                <h2>Welcome</h2>
-                <p style="text-align: center; margin: 20px 0; color: var(--text-light); letter-spacing: 0.5px;" id="todayDate"></p>
-                
-                <h3>How are you feeling today?</h3>
-                <div class="mood-selector">
-                    <button class="mood-btn" onclick="saveMood('😊')" title="Happy">😊</button>
-                    <button class="mood-btn" onclick="saveMood('😌')" title="Calm">😌</button>
-                    <button class="mood-btn" onclick="saveMood('😔')" title="Sad">😔</button>
-                    <button class="mood-btn" onclick="saveMood('😤')" title="Angry">😤</button>
-                    <button class="mood-btn" onclick="saveMood('😴')" title="Tired">😴</button>
-                    <button class="mood-btn" onclick="saveMood('🤗')" title="Excited">🤗</button>
-                </div>
-                <div id="moodHistory" style="margin-top: 25px;"></div>
-            </div>
-            
-            <div class="card">
-                <h2>Today's Summary</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="statNotes">0</div>
-                        <div class="stat-label">Notes Written</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statTasks">0</div>
-                        <div class="stat-label">Pending Tasks</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statGoals">0</div>
-                        <div class="stat-label">Active Goals</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="statDays">0</div>
-                        <div class="stat-label">Days Recorded</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="grid" id="grid"></div>
         
-        <!-- JOURNAL SECTION -->
-        <div id="journal" class="section">
-            <div class="card">
-                <h2>Personal Journal</h2>
-                <textarea id="journalText" placeholder="What happened today? How do you feel?"></textarea>
-                <button onclick="addJournalNote()">Save Note</button>
-            </div>
-            <div id="journalDays"></div>
-        </div>
-        
-        <!-- SONGS SECTION -->
-        <div id="songs" class="section">
-            <div class="card">
-                <h2>Music Collection</h2>
-                <input type="text" id="songName" placeholder="Song name">
-                <input type="text" id="songArtist" placeholder="Artist">
-                <input type="url" id="songLink" placeholder="Link (Spotify/YouTube)">
-                <button onclick="addSong()">Add Song</button>
-            </div>
-            <div id="songsList"></div>
-        </div>
-        
-        <!-- REMINDERS SECTION -->
-        <div id="reminders" class="section">
-            <div class="card">
-                <h2>Personal Reminders</h2>
-                <input type="text" id="reminderText" placeholder="What do you need to remember?">
-                <input type="date" id="reminderDate">
-                <button onclick="addReminder()">Add Reminder</button>
-            </div>
-            <div id="remindersList"></div>
-        </div>
-        
-        <!-- FACULTY SECTION -->
-        <div id="faculty" class="section">
-            <div class="card">
-                <h2>University Tasks</h2>
-                <input type="text" id="taskSubject" placeholder="Subject">
-                <textarea id="taskDescription" placeholder="What do you need to do? (e.g., Read chapter 3, complete assignment)"></textarea>
-                <input type="date" id="taskDate" placeholder="Due date">
-                <div class="file-upload-area" onclick="document.getElementById('taskFile').click()">
-                    Click to attach files (PDF, Word, images, etc.)
-                </div>
-                <input type="file" id="taskFile" style="display:none" multiple>
-                <div id="taskFilesList"></div>
-                <select id="taskPriority">
-                    <option value="baja">Low Priority</option>
-                    <option value="media">Medium Priority</option>
-                    <option value="alta">High Priority</option>
-                </select>
-                <button onclick="addTask()">Add Task</button>
-            </div>
-            <div id="tasksList"></div>
-        </div>
-        
-        <!-- GOALS SECTION -->
-        <div id="goals" class="section">
-            <div class="card">
-                <h2>Personal Goals</h2>
-                <input type="text" id="goalTitle" placeholder="What do you want to achieve?">
-                <textarea id="goalDescription" placeholder="Describe your goal..."></textarea>
-                <input type="date" id="goalDeadline" placeholder="Deadline">
-                <button onclick="addGoal()">Create Goal</button>
-            </div>
-            <div class="goals-container" id="goalsList"></div>
-        </div>
-        
-        <!-- PHOTOS SECTION -->
-        <div id="photos" class="section">
-            <div class="card">
-                <h2>Memories</h2>
-                <div class="file-upload-area" onclick="document.getElementById('photoUpload').click()">
-                    Click to upload photos
-                </div>
-                <input type="file" id="photoUpload" accept="image/*" multiple style="display:none">
-                <input type="text" id="photoCaption" placeholder="Photo description (optional)">
-                <button onclick="addPhotos()">Save Photos</button>
-            </div>
-            <div id="photoGallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;"></div>
+        <button class="btn reset-all" onclick="resetAll()">Reset</button>
+    </div>
+
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-title">Agregar Estrella ⭐</div>
+            <input type="date" class="modal-input" id="dateInput">
+            <textarea class="modal-input modal-textarea" id="reasonInput" placeholder="Motivo de la estrella..."></textarea>
+            <button class="btn" style="width: 100%;" onclick="confirmAddStar()">Agregar</button>
         </div>
     </div>
-    
+
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeHistoryModal()">&times;</button>
+            <div class="modal-title" id="historyTitle">Historial</div>
+            <div class="history-list" id="historyList"></div>
+        </div>
+    </div>
+
     <script>
-        const quotes = [
-            "Long live all the magic we made ✨",
-            "Shake it off, I'm just gonna shake it off 💃",
-            "This is a new year, a new beginning 🌟",
-            "You are what you love, not who loves you 💫",
-            "It's okay to not be okay sometimes 🤍",
-            "The best people in life are free 💝",
-            "We never go out of style ✨",
-            "Everything will be alright if we just keep dancing 💃",
-            "People throw rocks at things that shine 💎",
-            "This night is sparkling, don't you let it go 🌙"
+        const friends = [
+            'sofi', 'maggie', 'juli', 'guada', 'botti', 
+            'benja', 'chefa', 'jababy', 'lina', 'santutu', 
+            'artu', 'mateo'
         ];
-        
-        function setDailyQuote() {
-            const today = new Date().toDateString();
-            let quoteIndex = Number(today.split('').reduce((a,b) => a + b.charCodeAt(0), 0)) % quotes.length;
-            document.getElementById('dailyQuote').textContent = quotes[quoteIndex];
-        }
-        
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            document.querySelector('.mode-toggle').textContent = isDark ? '☀️' : '🌙';
-        }
-        
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            event.target.classList.add('active');
-            
-            if (sectionId === 'home') updateStats();
-        }
-        
-        function getTodayKey() {
-            return new Date().toLocaleDateString('en-US');
-        }
-        
-        // JOURNAL FUNCTIONS
-        function addJournalNote() {
-            const text = document.getElementById('journalText').value.trim();
-            if (!text) return alert('Write something first');
-            
-            const data = JSON.parse(localStorage.getItem('journal') || '{}');
-            const today = getTodayKey();
-            
-            if (!data[today]) data[today] = [];
-            
-            data[today].push({
-                id: Date.now(),
-                text: text,
-                time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-            });
-            
-            localStorage.setItem('journal', JSON.stringify(data));
-            document.getElementById('journalText').value = '';
-            loadJournal();
-            updateStats();
-        }
-        
-        function loadJournal() {
-            const data = JSON.parse(localStorage.getItem('journal') || '{}');
-            const container = document.getElementById('journalDays');
-            const days = Object.keys(data).sort().reverse();
-            
-            container.innerHTML = days.map(day => `
-                <div class="day-section">
-                    <div class="day-header">
-                        <span>${day}</span>
-                        <button class="delete-btn" onclick="deleteDay('${day}')">Delete Day</button>
-                    </div>
-                    ${data[day].map(note => `
-                        <div class="note-item">
-                            <div class="note-time">${note.time}</div>
-                            <div>${note.text}</div>
-                            <button style="margin-top: 12px; padding: 10px 25px;" class="delete-btn" onclick="deleteNote('${day}', ${note.id})">Delete</button>
-                        </div>
-                    `).join('')}
-                </div>
-            `).join('');
-        }
-        
-        function deleteNote(day, id) {
-            const data = JSON.parse(localStorage.getItem('journal') || '{}');
-            data[day] = data[day].filter(n => n.id !== id);
-            if (data[day].length === 0) delete data[day];
-            localStorage.setItem('journal', JSON.stringify(data));
-            loadJournal();
-        }
-        
-        function deleteDay(day) {
-            if (!confirm('Delete all notes from this day?')) return;
-            const data = JSON.parse(localStorage.getItem('journal') || '{}');
-            delete data[day];
-            localStorage.setItem('journal', JSON.stringify(data));
-            loadJournal();
-        }
-        
-        // SONGS FUNCTIONS
-        function addSong() {
-            const name = document.getElementById('songName').value.trim();
-            const artist = document.getElementById('songArtist').value.trim();
-            const link = document.getElementById('songLink').value.trim();
-            
-            if (!name) return alert('Enter song name');
-            
-            const songs = JSON.parse(localStorage.getItem('songs') || '[]');
-            songs.push({ id: Date.now(), name, artist, link });
-            localStorage.setItem('songs', JSON.stringify(songs));
-            
-            document.getElementById('songName').value = '';
-            document.getElementById('songArtist').value = '';
-            document.getElementById('songLink').value = '';
-            loadSongs();
-        }
-        
-        function loadSongs() {
-            const songs = JSON.parse(localStorage.getItem('songs') || '[]');
-            const container = document.getElementById('songsList');
-            
-            container.innerHTML = songs.map(song => `
-                <div class="song-item card">
-                    <div class="item-content">
-                        <strong>${song.name}</strong><br>
-                        ${song.artist ? `<span style="color: var(--text-light)">${song.artist}</span>` : ''}
-                    </div>
-                    <div class="item-actions">
-                        ${song.link ? `<button onclick="window.open('${song.link}', '_blank')">Open</button>` : ''}
-                        <button class="delete-btn" onclick="deleteSong(${song.id})">Delete</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-        
-        function deleteSong(id) {
-            let songs = JSON.parse(localStorage.getItem('songs') || '[]');
-            songs = songs.filter(s => s.id !== id);
-            localStorage.setItem('songs', JSON.stringify(songs));
-            loadSongs();
-        }
-        
-        // REMINDERS FUNCTIONS
-        function addReminder() {
-            const text = document.getElementById('reminderText').value.trim();
-            const date = document.getElementById('reminderDate').value;
-            
-            if (!text) return alert('Write a reminder');
-            
-            const reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-            reminders.push({ id: Date.now(), text, date, completed: false });
-            localStorage.setItem('reminders', JSON.stringify(reminders));
-            
-            document.getElementById('reminderText').value = '';
-            document.getElementById('reminderDate').value = '';
-            loadReminders();
-        }
-        
-        function loadReminders() {
-            const reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-            const container = document.getElementById('remindersList');
-            
-            container.innerHTML = reminders.map(r => `
-                <div class="reminder-item ${r.completed ? 'completed' : ''}">
-                    <input type="checkbox" class="checkbox" ${r.completed ? 'checked' : ''} 
-                           onchange="toggleReminder(${r.id})">
-                    <div class="item-content">
-                        <span class="reminder-text">${r.text}</span><br>
-                        ${r.date ? `<small style="color: var(--text-light)">${r.date}</small>` : ''}
-                    </div>
-                    <button class="delete-btn" onclick="deleteReminder(${r.id})">Delete</button>
-                </div>
-            `).join('');
-        }
-        
-        function toggleReminder(id) {
-            const reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-            const reminder = reminders.find(r => r.id === id);
-            reminder.completed = !reminder.completed;
-            localStorage.setItem('reminders', JSON.stringify(reminders));
-            loadReminders();
-        }
-        
-        function deleteReminder(id) {
-            let reminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-            reminders = reminders.filter(r => r.id !== id);
-            localStorage.setItem('reminders', JSON.stringify(reminders));
-            loadReminders();
-        }
-        
-        // FACULTY TASKS
-        let currentFiles = [];
-        
-        document.getElementById('taskFile').addEventListener('change', function(e) {
-            currentFiles = Array.from(e.target.files);
-            const filesList = document.getElementById('taskFilesList');
-            filesList.innerHTML = currentFiles.map((f, i) => `
-                <div class="file-item">
-                    <span>${f.name}</span>
-                    <button class="delete-btn" onclick="removeFile(${i})">Remove</button>
-                </div>
-            `).join('');
-        });
-        
-        function removeFile(index) {
-            currentFiles.splice(index, 1);
-            const dt = new DataTransfer();
-            currentFiles.forEach(f => dt.items.add(f));
-            document.getElementById('taskFile').files = dt.files;
-            document.getElementById('taskFile').dispatchEvent(new Event('change'));
-        }
-        
-        function addTask() {
-            const subject = document.getElementById('taskSubject').value.trim();
-            const description = document.getElementById('taskDescription').value.trim();
-            const date = document.getElementById('taskDate').value;
-            const priority = document.getElementById('taskPriority').value;
-            
-            if (!subject || !description) return alert('Complete subject and description');
-            
-            const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-            
-            const filePromises = Array.from(currentFiles).map(file => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve({
-                        name: file.name,
-                        type: file.type,
-                        data: e.target.result
-                    });
-                    reader.readAsDataURL(file);
-                });
-            });
-            
-            Promise.all(filePromises).then(files => {
-                tasks.push({
-                    id: Date.now(),
-                    subject,
-                    description,
-                    date,
-                    priority,
-                    files,
-                    completed: false
-                });
-                
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-                document.getElementById('taskSubject').value = '';
-                document.getElementById('taskDescription').value = '';
-                document.getElementById('taskDate').value = '';
-                document.getElementById('taskFile').value = '';
-                document.getElementById('taskFilesList').innerHTML = '';
-                currentFiles = [];
-                loadTasks();
-                updateStats();
-            });
-        }
-        
-        function loadTasks() {
-            const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-            const container = document.getElementById('tasksList');
-            
-            const priorityColors = {
-                'baja': '#90c090',
-                'media': '#d4a574',
-                'alta': '#c07070'
-            };
-            
-            container.innerHTML = tasks.map(task => `
-                <div class="task-item card ${task.completed ? 'completed' : ''}">
-                    <input type="checkbox" class="checkbox" ${task.completed ? 'checked' : ''} 
-                           onchange="toggleTask(${task.id})">
-                    <div class="item-content">
-                        <strong class="task-text" style="color: ${priorityColors[task.priority]}">${task.subject}</strong><br>
-                        <span class="task-text">${task.description}</span><br>
-                        ${task.date ? `<small style="color: var(--text-light)">${task.date}</small>` : ''}
-                        ${task.files.length > 0 ? `<div style="margin-top: 12px;">
-                            ${task.files.map(f => `
-                                <div class="file-item">
-                                    <span>${f.name}</span>
-                                    <button onclick="downloadFile('${f.name}', '${f.data}')">Download</button>
-                                </div>
-                            `).join('')}
-                        </div>` : ''}
-                    </div>
-                    <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
-                </div>
-            `).join('');
-        }
-        
-        function toggleTask(id) {
-            const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-            const task = tasks.find(t => t.id === id);
-            task.completed = !task.completed;
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-            loadTasks();
-            updateStats();
-        }
-        
-        function deleteTask(id) {
-            let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-            tasks = tasks.filter(t => t.id !== id);
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-            loadTasks();
-            updateStats();
-        }
-        
-        function downloadFile(filename, dataUrl) {
-            const a = document.createElement('a');
-            a.href = dataUrl;
-            a.download = filename;
-            a.click();
-        }
-        
-        // GOALS FUNCTIONS
-        function addGoal() {
-            const title = document.getElementById('goalTitle').value.trim();
-            const description = document.getElementById('goalDescription').value.trim();
-            const deadline = document.getElementById('goalDeadline').value;
-            
-            if (!title) return alert('Enter goal title');
-            
-            const goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            goals.push({
-                id: Date.now(),
-                title,
-                description,
-                deadline,
-                progress: 0
-            });
-            
-            localStorage.setItem('goals', JSON.stringify(goals));
-            document.getElementById('goalTitle').value = '';
-            document.getElementById('goalDescription').value = '';
-            document.getElementById('goalDeadline').value = '';
-            loadGoals();
-            updateStats();
-        }
-        
-        function loadGoals() {
-            const goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            const container = document.getElementById('goalsList');
-            
-            container.innerHTML = goals.map(goal => `
-                <div class="goal-card">
-                    <h3>${goal.title}</h3>
-                    <p style="color: var(--text-light); font-size: 0.9em;">${goal.description}</p>
-                    ${goal.deadline ? `<p style="color: var(--text-light); font-size: 0.85em; margin-top: 10px;">${goal.deadline}</p>` : ''}
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${goal.progress}%"></div>
-                    </div>
-                    <p style="text-align: center; margin: 12px 0; font-size: 0.9em;">${goal.progress}% complete</p>
-                    <input type="range" min="0" max="100" value="${goal.progress}" 
-                           onchange="updateGoalProgress(${goal.id}, this.value)"
-                           style="width: 100%; cursor: pointer;">
-                    <button class="delete-btn" onclick="deleteGoal(${goal.id})" style="width: 100%; margin-top: 12px;">Delete Goal</button>
-                </div>
-            `).join('');
-        }
-        
-        function updateGoalProgress(id, progress) {
-            const goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            const goal = goals.find(g => g.id === id);
-            goal.progress = parseInt(progress);
-            localStorage.setItem('goals', JSON.stringify(goals));
-            loadGoals();
-        }
-        
-        function deleteGoal(id) {
-            let goals = JSON.parse(localStorage.getItem('goals') || '[]');
-            goals = goals.filter(g => g.id !== id);
-            localStorage.setItem('goals', JSON.stringify(goals));
-            loadGoals();
-            updateStats();
-        }
-        
-        // PHOTOS FUNCTIONS
-        document.getElementById('photoUpload').addEventListener('change', function() {
-            const caption = document.getElementById('photoCaption').value.trim();
-            if (this.files.length > 0) {
-                document.querySelector('#photos button').textContent = 'Save ' + this.files.length + ' photo(s)';
+
+        let scores = {};
+        let history = {};
+        let currentPerson = null;
+        function createStarsBg() {
+            const starsBg = document.getElementById('starsBg');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsBg.appendChild(star);
             }
-        });
-        
-        function addPhotos() {
-            const files = document.getElementById('photoUpload').files;
-            const caption = document.getElementById('photoCaption').value.trim();
-            
-            if (files.length === 0) return alert('Select at least one photo');
-            
-            const photos = JSON.parse(localStorage.getItem('photos') || '[]');
-            
-            const filePromises = Array.from(files).map(file => {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve({
-                        id: Date.now() + Math.random(),
-                        data: e.target.result,
-                        caption: caption,
-                        date: getTodayKey()
-                    });
-                    reader.readAsDataURL(file);
-                });
+        }
+
+        // Crear estrellas de fondo
+        function createStarsBg() {
+            const starsBg = document.getElementById('starsBg');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsBg.appendChild(star);
+            }
+        }
+
+        // Cargar scores y historial guardados (COMPARTIDO)
+        async function loadScores() {
+            for (const name of friends) {
+                try {
+                    const result = await window.storage.get(`score-${name}`, true);
+                    scores[name] = result ? parseInt(result.value) : 0;
+                } catch (error) {
+                    scores[name] = 0;
+                }
+
+                try {
+                    const historyResult = await window.storage.get(`history-${name}`, true);
+                    history[name] = historyResult ? JSON.parse(historyResult.value) : [];
+                } catch (error) {
+                    history[name] = [];
+                }
+            }
+        }
+
+        // Guardar score e historial (COMPARTIDO)
+        async function saveScore(name) {
+            try {
+                await window.storage.set(`score-${name}`, scores[name].toString(), true);
+                await window.storage.set(`history-${name}`, JSON.stringify(history[name]), true);
+            } catch (error) {
+                console.error('Error guardando:', error);
+            }
+        }
+
+        function createCards() {
+            const grid = document.getElementById('grid');
+            friends.forEach((name) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-name">${name}</div>
+                    <div class="counter" id="counter-${name}">0</div>
+                    <div class="stars-display" id="stars-${name}"></div>
+                    <div class="btn-group">
+                        <button class="btn" onclick="openAddModal('${name}')">+</button>
+                        <button class="btn btn-minus" onclick="removeStar('${name}')">−</button>
+                    </div>
+                    <button class="btn btn-history" onclick="showHistory('${name}')">Ver historial</button>
+                `;
+                grid.appendChild(card);
             });
-            
-            Promise.all(filePromises).then(newPhotos => {
-                photos.push(...newPhotos);
-                localStorage.setItem('photos', JSON.stringify(photos));
-                document.getElementById('photoUpload').value = '';
-                document.getElementById('photoCaption').value = '';
-                document.querySelector('#photos button').textContent = 'Save Photos';
-                loadPhotos();
-            });
         }
-        
-        function loadPhotos() {
-            const photos = JSON.parse(localStorage.getItem('photos') || '[]');
-            const container = document.getElementById('photoGallery');
-            
-            container.innerHTML = photos.map(photo => `
-                <div class="card" style="padding: 12px;">
-                    <img src="${photo.data}" style="width: 100%; height: 200px; object-fit: cover;">
-                    ${photo.caption ? `<p style="margin-top: 12px; font-size: 0.85em; color: var(--text-light);">${photo.caption}</p>` : ''}
-                    <small style="color: var(--text-light); font-size: 0.75em;">${photo.date}</small>
-                    <button class="delete-btn" onclick="deletePhoto(${photo.id})" style="width: 100%; margin-top: 10px;">Delete</button>
-                </div>
-            `).join('');
+
+        function openAddModal(name) {
+            currentPerson = name;
+            document.getElementById('dateInput').valueAsDate = new Date();
+            document.getElementById('reasonInput').value = '';
+            document.getElementById('addModal').classList.add('active');
         }
-        
-        function deletePhoto(id) {
-            let photos = JSON.parse(localStorage.getItem('photos') || '[]');
-            photos = photos.filter(p => p.id !== id);
-            localStorage.setItem('photos', JSON.stringify(photos));
-            loadPhotos();
+
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('active');
+            currentPerson = null;
         }
-        
-        // MOOD TRACKING
-        function saveMood(emoji) {
-            const moods = JSON.parse(localStorage.getItem('moods') || '{}');
-            const today = getTodayKey();
-            moods[today] = emoji;
-            localStorage.setItem('moods', JSON.stringify(moods));
-            
-            document.querySelectorAll('.mood-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
-            
-            loadMoodHistory();
-        }
-        
-        function loadMoodHistory() {
-            const moods = JSON.parse(localStorage.getItem('moods') || '{}');
-            const container = document.getElementById('moodHistory');
-            const days = Object.keys(moods).sort().reverse().slice(0, 7);
-            
-            if (days.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: var(--text-light); font-size: 0.9em;">No mood recorded yet</p>';
+
+        function confirmAddStar() {
+            const date = document.getElementById('dateInput').value;
+            const reason = document.getElementById('reasonInput').value.trim();
+
+            if (!date || !reason) {
+                alert('Por favor completá fecha y motivo');
                 return;
             }
-            
-            container.innerHTML = '<h3>Last Week</h3>' + days.map(day => `
-                <div style="display: flex; justify-content: space-between; padding: 12px; background: var(--cream); margin: 8px 0; font-size: 0.9em;">
-                    <span style="color: var(--text-light);">${day}</span>
-                    <span style="font-size: 1.4em;">${moods[day]}</span>
-                </div>
-            `).join('');
+
+            scores[currentPerson]++;
+            history[currentPerson].push({ date, reason });
+            updateDisplay(currentPerson);
+            saveScore(currentPerson);
+            createGlowParticles(window.innerWidth / 2, window.innerHeight / 2);
+            closeModal();
         }
-        
-        // STATS
-        function updateStats() {
-            const journal = JSON.parse(localStorage.getItem('journal') || '{}');
-            const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-            const goals = JSON.parse(localStorage.getItem('goals') || '[]');
+
+        function showHistory(name) {
+            const modal = document.getElementById('historyModal');
+            const title = document.getElementById('historyTitle');
+            const list = document.getElementById('historyList');
+
+            title.textContent = `Historial de ${name}`;
             
-            const today = getTodayKey();
-            const todayNotes = journal[today] ? journal[today].length : 0;
-            const pendingTasks = tasks.filter(t => !t.completed).length;
-            const activeGoals = goals.length;
-            const totalDays = Object.keys(journal).length;
-            
-            document.getElementById('statNotes').textContent = todayNotes;
-            document.getElementById('statTasks').textContent = pendingTasks;
-            document.getElementById('statGoals').textContent = activeGoals;
-            document.getElementById('statDays').textContent = totalDays;
+            if (history[name].length === 0) {
+                list.innerHTML = '<p style="color: #a0aec0; text-align: center;">No hay estrellas todavía</p>';
+            } else {
+                list.innerHTML = history[name].map((item, index) => `
+                    <div class="history-item">
+                        <div class="history-date">⭐ ${new Date(item.date).toLocaleDateString('es-AR')}</div>
+                        <div class="history-reason">${item.reason}</div>
+                    </div>
+                `).reverse().join('');
+            }
+
+            modal.classList.add('active');
         }
-        
-        // INIT
-        window.onload = function() {
-            setDailyQuote();
-            document.getElementById('todayDate').textContent = new Date().toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.remove('active');
+        }
+
+        function removeStar(name) {
+            if (scores[name] > 0) {
+                scores[name]--;
+                updateDisplay(name);
+                saveScore(name);
+            }
+        }
+
+        function updateDisplay(name) {
+            const starsDiv = document.getElementById(`stars-${name}`);
+            const counterDiv = document.getElementById(`counter-${name}`);
             
-            loadJournal();
-            loadSongs();
-            loadReminders();
-            loadTasks();
-            loadGoals();
-            loadPhotos();
-            loadMoodHistory();
-            updateStats();
+            const starCount = Math.min(scores[name], 15);
+            starsDiv.innerHTML = '⭐'.repeat(starCount);
+            if (scores[name] > 15) {
+                starsDiv.innerHTML += ` <span style="color: #a0aec0; font-size: 1.2rem;">+${scores[name] - 15}</span>`;
+            }
             
-            const today = getTodayKey();
-            const moods = JSON.parse(localStorage.getItem('moods') || '{}');
-            if (moods[today]) {
-                document.querySelectorAll('.mood-btn').forEach(btn => {
-                    if (btn.textContent.includes(moods[today])) {
-                        btn.classList.add('selected');
-                    }
+            counterDiv.textContent = scores[name];
+        }
+
+        function createGlowParticles(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'glow-particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = 50 + Math.random() * 30;
+                particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                particle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        function resetAll() {
+            if (confirm('¿Resetear todos los puntajes?')) {
+                friends.forEach(async name => {
+                    scores[name] = 0;
+                    updateDisplay(name);
+                    await saveScore(name);
                 });
             }
-        };
+        }
+
+        // Inicializar
+        async function init() {
+            createStarsBg();
+            await loadScores();
+            createCards();
+            friends.forEach(name => updateDisplay(name));
+        }
+
+        init();
     </script>
 </body>
 </html>
