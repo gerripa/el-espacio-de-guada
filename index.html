@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⭐ Competencia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .stars-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .star-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #a0aec0;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover:before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 25px;
+            text-transform: lowercase;
+            letter-spacing: 1px;
+        }
+
+        .stars-display {
+            font-size: 2rem;
+            margin: 25px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            color: #ffd700;
+        }
+
+        .star {
+            display: inline-block;
+            animation: starPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .counter {
+            font-size: 2.5rem;
+            font-weight: 200;
+            color: #a0aec0;
+            margin: 20px 0;
+            letter-spacing: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 28px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-minus {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-history {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: rgba(255, 215, 0, 0.3);
+            font-size: 0.85rem;
+            padding: 8px 20px;
+            margin-top: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #a0aec0;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .modal-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .history-list {
+            margin-top: 20px;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #ffd700;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .history-date {
+            color: #ffd700;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .history-reason {
+            color: #a0aec0;
+            font-size: 1rem;
+        }
+
+        .reset-all {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 35px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .glow-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ffd700;
+            animation: glowParticle 1s ease-out forwards;
+        }
+
+        @keyframes glowParticle {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-bg" id="starsBg"></div>
+    
+    <div class="container">
+        <h1>STARS</h1>
+        <p class="subtitle">Summer Competition 2025</p>
+        
+        <div class="grid" id="grid"></div>
+        
+        <button class="btn reset-all" onclick="resetAll()">Reset</button>
+    </div>
+
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-title">Agregar Estrella ⭐</div>
+            <input type="date" class="modal-input" id="dateInput">
+            <textarea class="modal-input modal-textarea" id="reasonInput" placeholder="Motivo de la estrella..."></textarea>
+            <button class="btn" style="width: 100%;" onclick="confirmAddStar()">Agregar</button>
+        </div>
+    </div>
+
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeHistoryModal()">&times;</button>
+            <div class="modal-title" id="historyTitle">Historial</div>
+            <div class="history-list" id="historyList"></div>
+        </div>
+    </div>
+
+    <script>
+        const friends = [
+            'sofi', 'maggie', 'juli', 'guada', 'botti', 
+            'benja', 'chefa', 'jababy', 'lina', 'santutu', 
+            'artu', 'mateo'
+        ];
+
+        let scores = {};
+        let history = {};
+        let currentPerson = null;
+        function createStarsBg() {
+            const starsBg = document.getElementById('starsBg');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsBg.appendChild(star);
+            }
+        }
+
+        // Crear estrellas de fondo
+        function createStarsBg() {
+            const starsBg = document.getElementById('starsBg');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star-particle';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsBg.appendChild(star);
+            }
+        }
+
+        // Cargar scores y historial guardados (COMPARTIDO)
+        async function loadScores() {
+            for (const name of friends) {
+                try {
+                    const result = await window.storage.get(`score-${name}`, true);
+                    scores[name] = result ? parseInt(result.value) : 0;
+                } catch (error) {
+                    scores[name] = 0;
+                }
+
+                try {
+                    const historyResult = await window.storage.get(`history-${name}`, true);
+                    history[name] = historyResult ? JSON.parse(historyResult.value) : [];
+                } catch (error) {
+                    history[name] = [];
+                }
+            }
+        }
+
+        // Guardar score e historial (COMPARTIDO)
+        async function saveScore(name) {
+            try {
+                await window.storage.set(`score-${name}`, scores[name].toString(), true);
+                await window.storage.set(`history-${name}`, JSON.stringify(history[name]), true);
+            } catch (error) {
+                console.error('Error guardando:', error);
+            }
+        }
+
+        function createCards() {
+            const grid = document.getElementById('grid');
+            friends.forEach((name) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-name">${name}</div>
+                    <div class="counter" id="counter-${name}">0</div>
+                    <div class="stars-display" id="stars-${name}"></div>
+                    <div class="btn-group">
+                        <button class="btn" onclick="openAddModal('${name}')">+</button>
+                        <button class="btn btn-minus" onclick="removeStar('${name}')">−</button>
+                    </div>
+                    <button class="btn btn-history" onclick="showHistory('${name}')">Ver historial</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openAddModal(name) {
+            currentPerson = name;
+            document.getElementById('dateInput').valueAsDate = new Date();
+            document.getElementById('reasonInput').value = '';
+            document.getElementById('addModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('active');
+            currentPerson = null;
+        }
+
+        function confirmAddStar() {
+            const date = document.getElementById('dateInput').value;
+            const reason = document.getElementById('reasonInput').value.trim();
+
+            if (!date || !reason) {
+                alert('Por favor completá fecha y motivo');
+                return;
+            }
+
+            scores[currentPerson]++;
+            history[currentPerson].push({ date, reason });
+            updateDisplay(currentPerson);
+            saveScore(currentPerson);
+            createGlowParticles(window.innerWidth / 2, window.innerHeight / 2);
+            closeModal();
+        }
+
+        function showHistory(name) {
+            const modal = document.getElementById('historyModal');
+            const title = document.getElementById('historyTitle');
+            const list = document.getElementById('historyList');
+
+            title.textContent = `Historial de ${name}`;
+            
+            if (history[name].length === 0) {
+                list.innerHTML = '<p style="color: #a0aec0; text-align: center;">No hay estrellas todavía</p>';
+            } else {
+                list.innerHTML = history[name].map((item, index) => `
+                    <div class="history-item">
+                        <div class="history-date">⭐ ${new Date(item.date).toLocaleDateString('es-AR')}</div>
+                        <div class="history-reason">${item.reason}</div>
+                    </div>
+                `).reverse().join('');
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.remove('active');
+        }
+
+        function removeStar(name) {
+            if (scores[name] > 0) {
+                scores[name]--;
+                updateDisplay(name);
+                saveScore(name);
+            }
+        }
+
+        function updateDisplay(name) {
+            const starsDiv = document.getElementById(`stars-${name}`);
+            const counterDiv = document.getElementById(`counter-${name}`);
+            
+            const starCount = Math.min(scores[name], 15);
+            starsDiv.innerHTML = '⭐'.repeat(starCount);
+            if (scores[name] > 15) {
+                starsDiv.innerHTML += ` <span style="color: #a0aec0; font-size: 1.2rem;">+${scores[name] - 15}</span>`;
+            }
+            
+            counterDiv.textContent = scores[name];
+        }
+
+        function createGlowParticles(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'glow-particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                const angle = (i / 8) * Math.PI * 2;
+                const distance = 50 + Math.random() * 30;
+                particle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+                particle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+
+        function resetAll() {
+            if (confirm('¿Resetear todos los puntajes?')) {
+                friends.forEach(async name => {
+                    scores[name] = 0;
+                    updateDisplay(name);
+                    await saveScore(name);
+                });
+            }
+        }
+
+        // Inicializar
+        async function init() {
+            createStarsBg();
+            await loadScores();
+            createCards();
+            friends.forEach(name => updateDisplay(name));
+        }
+
+        init();
+    </script>
+</body>
+</html>
